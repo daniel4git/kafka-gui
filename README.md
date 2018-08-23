@@ -21,3 +21,4 @@ Right now it's super basic and buggy. Running from an IDE or command line is pre
 You can consume messages from a particular topic, or use a regular expression to consume from any topics matching that expression.
 
 ## Screenshots
+![Alt text](https://user-images.githubusercontent.com/9749143/44516936-3da1c400-a67b-11e8-8573-884cd909c542.png)
