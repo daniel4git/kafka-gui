@@ -20,7 +20,7 @@
             <Label layoutX="517.0" layoutY="14.0" text="Is Pattern" />
             <CheckBox fx:id="isPattern" alignment="CENTER" layoutX="538.0" layoutY="40.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="13.0" />
             <Button id="add" fx:id="add" layoutX="608.0" layoutY="35.0" mnemonicParsing="false" onMouseClicked="#addTopic" text="Add" />
-            <TableView fx:id="table" editable="true" items="${controller.topics}" layoutX="14.0" layoutY="81.0" prefHeight="501.0" prefWidth="637.0">
+            <TableView fx:id="table" editable="true" items="${controller.topics}" layoutX="14.0" layoutY="81.0" prefHeight="460.0" prefWidth="637.0">
               <columns>
                 <TableColumn editable="false" prefWidth="441.0" text="Topic">
                   <cellValueFactory>
@@ -39,6 +39,7 @@
                 </TableColumn>
               </columns>
             </TableView>
+                  <CheckBox fx:id="fake" alignment="CENTER" contentDisplay="TOP" layoutX="505.0" layoutY="559.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#toggleFakeData" text="Generate fake data" />
           </children>
         </AnchorPane>
       </content>

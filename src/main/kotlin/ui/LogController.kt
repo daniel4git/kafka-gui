@@ -1,19 +1,18 @@
 package ui
 
 import javafx.beans.property.SimpleBooleanProperty
+import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
 import javafx.scene.control.*
-import javafx.scene.input.MouseEvent
-import kafka.GuiEndpoint
-import kafka.TopicListener
-import kotlinx.coroutines.experimental.async
+import org.apache.camel.builder.RouteBuilder
 import org.apache.camel.impl.DefaultCamelContext
+import routing.GuiEndpoint
+import routing.TopicListener
 import java.net.URL
 import java.util.*
-import javafx.beans.property.SimpleStringProperty
 
 class LogController : Initializable {
 
@@ -25,16 +24,15 @@ class LogController : Initializable {
     @FXML var topic: TextField? = null
     @FXML var isPattern: CheckBox? = null
     @FXML var table: TableView<TopicRow>? = null
+    @FXML var fake: CheckBox? = null
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
         table?.items?.setAll(topics)
-        async {
-            camelContext.start()
-            camelContext.addRoutes(GuiEndpoint(log))
-        }
+        camelContext.start()
+        camelContext.addRoutes(GuiEndpoint(log))
     }
 
-    fun addTopic(event: MouseEvent) {
+    fun addTopic() {
         val topic = topic?.text ?: ""
         val isPattern = isPattern?.isSelected ?: false
 
@@ -42,6 +40,24 @@ class LogController : Initializable {
             topics.add(TopicRow(topic, isPattern, true))
             camelContext.addRoutes(TopicListener(topic, isPattern))
         }
+    }
+
+    fun toggleFakeData( ) {
+        if (fake?.isSelected == false) {
+            camelContext.stopRoute("fake")
+            return
+        }
+
+        camelContext.addRoutes(object : RouteBuilder() {
+            override fun configure() {
+                from("timer:foo")
+                    .routeId("fake")
+                    .process {
+                        it?.out?.body = "Hey"
+                    }
+                    .to("direct:gui")
+            }
+        })
     }
 }
 

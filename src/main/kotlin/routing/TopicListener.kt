@@ -1,4 +1,4 @@
-package kafka
+package routing
 
 import org.apache.camel.builder.RouteBuilder
 import java.util.*
