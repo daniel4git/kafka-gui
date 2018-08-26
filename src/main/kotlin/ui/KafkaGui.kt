@@ -1,10 +1,12 @@
 package ui
 
 import javafx.application.Application
+import javafx.event.EventHandler
 import javafx.fxml.FXMLLoader
 import javafx.scene.Parent
 import javafx.scene.Scene
 import javafx.stage.Stage
+import javafx.stage.WindowEvent
 
 class KafkaGui : Application() {
 
@@ -17,6 +19,8 @@ class KafkaGui : Application() {
         stage.scene = scene
         stage.isResizable = true
         stage.show()
+
+        stage.onCloseRequest = EventHandler<WindowEvent> { System.exit(0) }
     }
 
     companion object {
