@@ -7,10 +7,11 @@ import javafx.collections.ObservableList
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
 import javafx.scene.control.*
-import org.apache.camel.builder.RouteBuilder
 import org.apache.camel.impl.DefaultCamelContext
-import routing.GuiEndpoint
-import routing.TopicListener
+import routes.Faker
+import routes.GuiEndpoint
+import routes.Recorder
+import routes.TopicListener
 import java.net.URL
 import java.util.*
 
@@ -30,6 +31,8 @@ class LogController : Initializable {
     override fun initialize(location: URL?, resources: ResourceBundle?) {
         table?.items?.setAll(topics)
         camelContext.start()
+        camelContext.addRoutes(Faker())
+        camelContext.addRoutes(Recorder())
         camelContext.addRoutes(GuiEndpoint(log))
     }
 
@@ -43,38 +46,20 @@ class LogController : Initializable {
         }
     }
 
-    fun toggleFakeData( ) {
-        if (fake?.isSelected == false) {
-            camelContext.stopRoute("fake")
-            return
+    fun toggleRoute(shouldStart: Boolean, routeId: String) {
+        if (shouldStart) {
+            camelContext.startRoute(routeId)
+        } else {
+            camelContext.stopRoute(routeId)
         }
+    }
 
-        camelContext.addRoutes(object : RouteBuilder() {
-            override fun configure() {
-                from("timer:foo")
-                    .routeId("fake")
-                    .process {
-                        it?.out?.body = "Hey"
-                    }
-                    .to("direct:gui")
-            }
-        })
+    fun toggleFakeData() {
+        toggleRoute(fake?.isSelected == true, "fake")
     }
 
     fun toggleCollectData() {
-        if (collect?.isSelected == false) {
-            camelContext.stopRoute("tap")
-            return
-        }
-
-        camelContext.addRoutes(object : RouteBuilder() {
-            override fun configure() {
-                from("direct:tap")
-                    .routeId("tap")
-                    .process { it?.out?.body = it?.getIn()?.body.toString() + "\n" }
-                    .to("file:messages?fileExist=append&fileName=log.txt")
-            }
-        })
+        toggleRoute(collect?.isSelected == true, "tap")
     }
 }
 

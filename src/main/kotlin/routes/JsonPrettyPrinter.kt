@@ -1,4 +1,4 @@
-package routing
+package routes
 
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonParser

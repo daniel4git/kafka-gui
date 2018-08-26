@@ -1,4 +1,4 @@
-package routing
+package routes
 
 import org.apache.camel.builder.RouteBuilder
 import java.util.*

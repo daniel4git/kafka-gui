@@ -1,4 +1,4 @@
-package routing
+package routes
 
 import javafx.scene.control.TextArea
 import org.apache.camel.builder.RouteBuilder
