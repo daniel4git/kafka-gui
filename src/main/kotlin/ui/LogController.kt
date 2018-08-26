@@ -25,6 +25,7 @@ class LogController : Initializable {
     @FXML var isPattern: CheckBox? = null
     @FXML var table: TableView<TopicRow>? = null
     @FXML var fake: CheckBox? = null
+    @FXML var collect: CheckBox? = null
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
         table?.items?.setAll(topics)
@@ -56,6 +57,22 @@ class LogController : Initializable {
                         it?.out?.body = "Hey"
                     }
                     .to("direct:gui")
+            }
+        })
+    }
+
+    fun toggleCollectData() {
+        if (collect?.isSelected == false) {
+            camelContext.stopRoute("tap")
+            return
+        }
+
+        camelContext.addRoutes(object : RouteBuilder() {
+            override fun configure() {
+                from("direct:tap")
+                    .routeId("tap")
+                    .process { it?.out?.body = it?.getIn()?.body.toString() + "\n" }
+                    .to("file:messages?fileExist=append&fileName=log.txt")
             }
         })
     }

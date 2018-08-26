@@ -9,6 +9,8 @@ class GuiEndpoint(private val textArea: TextArea?) : RouteBuilder() {
 
     override fun configure() {
         from("direct:gui")
+            .wireTap("direct:tap")
+            .process(JsonPrettyPrinter())
             .process {
                 textArea?.appendText(it?.getIn()?.body.toString() + linebreak)
             }

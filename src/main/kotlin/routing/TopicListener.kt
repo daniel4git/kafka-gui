@@ -15,7 +15,6 @@ class TopicListener(
     override fun configure() {
         from("kafka:$topic?brokers=$KAFKA_HOST&topicIsPattern=$isPattern")
             .routeId(id)
-            .process(JsonPrettyPrinter())
             .to("direct:gui")
     }
 }

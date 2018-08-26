@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Font?>
 <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
          prefWidth="700.0" rotateGraphic="true" side="LEFT" tabClosingPolicy="UNAVAILABLE"
-         xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.LogController">
+         xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.LogController">
   <tabs>
     <Tab text="Listeners">
       <content>
@@ -43,6 +43,8 @@
             <CheckBox fx:id="fake" alignment="CENTER" contentDisplay="TOP" layoutX="505.0" layoutY="559.0"
                       mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#toggleFakeData"
                       text="Generate fake data"/>
+            <CheckBox fx:id="collect" layoutX="334.0" layoutY="559.0" mnemonicParsing="false"
+                      onAction="#toggleCollectData" text="Collect messages"/>
           </children>
         </AnchorPane>
       </content>
