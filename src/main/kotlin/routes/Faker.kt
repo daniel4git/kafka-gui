@@ -8,8 +8,9 @@ class Faker : RouteBuilder() {
             .routeId("fake")
             .autoStartup(false)
             .process {
+                it?.out?.setHeader("kafka.TOPIC", "fake")
                 it?.out?.body = "Hey"
             }
-            .to("direct:gui")
+            .to("seda:kafka")
     }
 }

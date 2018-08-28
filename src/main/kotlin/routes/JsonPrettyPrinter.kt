@@ -9,6 +9,6 @@ class JsonPrettyPrinter : Processor {
     override fun process(exchange: Exchange?) {
         val gson = GsonBuilder().setPrettyPrinting().create()
         val je = JsonParser().parse(exchange?.getIn()?.body.toString())
-        exchange?.out?.body = gson.toJson(je)
+        exchange?.getIn()?.body = gson.toJson(je)
     }
 }

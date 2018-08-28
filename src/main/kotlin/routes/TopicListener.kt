@@ -3,7 +3,7 @@ package routes
 import org.apache.camel.builder.RouteBuilder
 import java.util.*
 
-const val KAFKA_HOST = "localhost:9092"
+const val KAFKA_HOST = "192.168.2.1:9092"
 
 class TopicListener(
     val topic: String,
@@ -15,6 +15,7 @@ class TopicListener(
     override fun configure() {
         from("kafka:$topic?brokers=$KAFKA_HOST&topicIsPattern=$isPattern")
             .routeId(id)
-            .to("direct:gui")
+            .wireTap("seda:tap")
+            .to("seda:kafka")
     }
 }

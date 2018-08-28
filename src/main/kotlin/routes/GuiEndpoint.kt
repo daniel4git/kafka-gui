@@ -5,14 +5,18 @@ import org.apache.camel.builder.RouteBuilder
 
 class GuiEndpoint(private val textArea: TextArea?) : RouteBuilder() {
 
-    private val linebreak = "\n ------------------------------------- \n"
-
     override fun configure() {
-        from("direct:gui")
-            .wireTap("direct:tap")
+        from("seda:kafka")
             .process(JsonPrettyPrinter())
             .process {
-                textArea?.appendText(it?.getIn()?.body.toString() + linebreak)
+                it.out?.body =
+                    """
+                        |${it?.getIn()?.getHeader("kafka.TOPIC")}
+                        |${it?.getIn()?.body}
+                        |-------------------------------------
+                        |
+                    """.trimMargin()
             }
+            .to("stream:out")
     }
 }
