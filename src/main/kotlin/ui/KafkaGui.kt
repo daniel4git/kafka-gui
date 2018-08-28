@@ -15,6 +15,8 @@ class KafkaGui : Application() {
         val parent: Parent = fxmlLoader.load()
         val scene = Scene(parent, 800.0, 600.0)
 
+        scene.stylesheets.add(javaClass.getResource("/styles.css").toExternalForm())
+
         stage.title = "Kafka Message Viewer"
         stage.scene = scene
         stage.isResizable = true

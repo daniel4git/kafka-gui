@@ -19,8 +19,9 @@ class LogController : Initializable {
 
     private val camelContext = DefaultCamelContext()
     var topics: ObservableList<TopicRow> = FXCollections.observableArrayList<TopicRow>()
+    var messages: ObservableList<String> = FXCollections.observableArrayList<String>()
 
-    @FXML var log: TextArea? = null
+    @FXML var log: ListView<String>? = null
     @FXML var add: Button? = null
     @FXML var topic: TextField? = null
     @FXML var isPattern: CheckBox? = null
@@ -29,11 +30,10 @@ class LogController : Initializable {
     @FXML var collect: CheckBox? = null
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
-        table?.items?.setAll(topics)
         camelContext.start()
         camelContext.addRoutes(Faker())
         camelContext.addRoutes(Recorder())
-        camelContext.addRoutes(GuiEndpoint(log))
+        camelContext.addRoutes(GuiEndpoint(messages, log))
     }
 
     fun addTopic() {

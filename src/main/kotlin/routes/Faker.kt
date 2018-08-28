@@ -4,7 +4,7 @@ import org.apache.camel.builder.RouteBuilder
 
 class Faker : RouteBuilder() {
     override fun configure() {
-        from("timer:foo")
+        from("timer:foo?period=500")
             .routeId("fake")
             .autoStartup(false)
             .process {
