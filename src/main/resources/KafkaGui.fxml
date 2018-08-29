@@ -44,13 +44,14 @@
             </TableView>
             <CheckBox fx:id="fake" alignment="CENTER" contentDisplay="TOP" layoutX="505.0" layoutY="559.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#toggleFakeData" text="Generate fake data" />
             <CheckBox fx:id="collect" layoutX="334.0" layoutY="559.0" mnemonicParsing="false" onAction="#toggleCollectData" text="Collect messages" />
+                  <Button fx:id="remove" layoutX="174.0" layoutY="555.0" mnemonicParsing="false" onMouseClicked="#removeLastRoute" text="Remove last route" />
           </children>
         </AnchorPane>
       </content>
     </Tab>
     <Tab text="Log">
          <content>
-            <ListView fx:id="messages" prefHeight="200.0" prefWidth="200.0"/>
+            <ListView fx:id="messages" prefHeight="200.0" prefWidth="200.0" />
          </content>
     </Tab>
   </tabs>

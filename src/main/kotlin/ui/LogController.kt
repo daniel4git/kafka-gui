@@ -7,6 +7,7 @@ import javafx.collections.ObservableList
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
 import javafx.scene.control.*
+import kotlinx.coroutines.experimental.launch
 import org.apache.camel.impl.DefaultCamelContext
 import routes.Faker
 import routes.GuiEndpoint
@@ -27,6 +28,7 @@ class LogController : Initializable {
     @FXML var table: TableView<TopicRow>? = null
     @FXML var fake: CheckBox? = null
     @FXML var collect: CheckBox? = null
+    @FXML var remove: Button? = null
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
         camelContext.start()
@@ -40,8 +42,9 @@ class LogController : Initializable {
         val isPattern = isPattern?.isSelected ?: false
 
         if (topic.isNotEmpty()) {
-            topics.add(TopicRow(topic, isPattern, true))
-            camelContext.addRoutes(TopicListener(topic, isPattern))
+            val topicListener = TopicListener(topic, isPattern)
+            camelContext.addRoutes(topicListener)
+            topics.add(TopicRow(topic, isPattern, true, topicListener.id))
         }
     }
 
@@ -60,9 +63,17 @@ class LogController : Initializable {
     fun toggleCollectData() {
         toggleRoute(collect?.isSelected == true, "tap")
     }
+
+    fun removeLastRoute() {
+        launch {
+            camelContext.stopRoute(topics.last().id)
+            camelContext.removeRoute(topics.last().id)
+            topics.remove(topics.last())
+        }
+    }
 }
 
-class TopicRow constructor(topic: String, isPattern: Boolean, enabled: Boolean) {
+class TopicRow constructor(topic: String, isPattern: Boolean, enabled: Boolean, val id: String) {
     private val topic = SimpleStringProperty(topic)
     private val isPattern = SimpleBooleanProperty(isPattern)
     private val enabled = SimpleBooleanProperty(enabled)

@@ -11,7 +11,7 @@
 
   <properties>
     <kotlin.version>1.2.61</kotlin.version>
-    <kotlinx.version>0.25.0-eap13</kotlinx.version>
+    <kotlinx.version>0.21</kotlinx.version>
     <spock.version>1.2-RC1-groovy-2.5</spock.version>
     <camel-version>2.22.0</camel-version>
     <log4j-version>2.11.1</log4j-version>
