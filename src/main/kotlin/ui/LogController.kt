@@ -19,9 +19,8 @@ class LogController : Initializable {
 
     private val camelContext = DefaultCamelContext()
     var topics: ObservableList<TopicRow> = FXCollections.observableArrayList<TopicRow>()
-    var messages: ObservableList<String> = FXCollections.observableArrayList<String>()
 
-    @FXML var log: ListView<String>? = null
+    @FXML var messages: ListView<String>? = null
     @FXML var add: Button? = null
     @FXML var topic: TextField? = null
     @FXML var isPattern: CheckBox? = null
@@ -33,7 +32,7 @@ class LogController : Initializable {
         camelContext.start()
         camelContext.addRoutes(Faker())
         camelContext.addRoutes(Recorder())
-        camelContext.addRoutes(GuiEndpoint(messages, log))
+        camelContext.addRoutes(GuiEndpoint(messages))
     }
 
     fun addTopic() {

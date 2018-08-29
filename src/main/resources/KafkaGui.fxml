@@ -50,7 +50,7 @@
     </Tab>
     <Tab text="Log">
          <content>
-            <ListView fx:id="log" prefHeight="200.0" prefWidth="200.0" items="${controller.messages}"/>
+            <ListView fx:id="messages" prefHeight="200.0" prefWidth="200.0"/>
          </content>
     </Tab>
   </tabs>
