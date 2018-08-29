@@ -1,6 +1,7 @@
 package routes
 
-import javafx.application.Platform
+import beans.JsonFormatter
+import beans.MessageView
 import javafx.collections.ObservableList
 import javafx.scene.control.ListView
 import org.apache.camel.builder.RouteBuilder
@@ -13,17 +14,7 @@ class GuiEndpoint(
 
     override fun configure() {
         from("seda:kafka")
-            .process(JsonPrettyPrinter())
-            .process {
-                Platform.runLater {
-                    messages.add(
-                        """
-                        |${it?.getIn()?.getHeader("kafka.TOPIC")}
-                        |${it?.getIn()?.body}
-                    """.trimMargin()
-                    )
-                    listView?.scrollTo(listView?.items.size - 1)
-                }
-            }
+            .bean(JsonFormatter())
+            .bean(MessageView(messages, listView))
     }
 }
