@@ -11,7 +11,7 @@ import javafx.stage.WindowEvent
 class KafkaGui : Application() {
 
     override fun start(stage: Stage) {
-        val fxmlLoader = FXMLLoader(javaClass.getResource("/KafkaGui.fxml"))
+        val fxmlLoader = FXMLLoader(javaClass.getResource("/fxml/KafkaGui.fxml"))
         val parent: Parent = fxmlLoader.load()
         val scene = Scene(parent, 800.0, 600.0)
 

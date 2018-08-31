@@ -3,7 +3,7 @@ package routes
 import org.apache.camel.builder.RouteBuilder
 import java.util.*
 
-const val KAFKA_HOST = "192.168.2.1:9092"
+const val KAFKA_HOST = "localhost:9092"
 
 class TopicListener(
     val topic: String,
