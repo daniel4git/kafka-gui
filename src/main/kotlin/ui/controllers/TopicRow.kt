@@ -26,11 +26,11 @@ class TopicRow : ListCell<TopicListener>() {
             contentDisplay = ContentDisplay.TEXT_ONLY
         } else {
             topic?.text = item.topic
-            toggle?.text = if (isEnabled) "stop" else "Start"
             contentDisplay = ContentDisplay.GRAPHIC_ONLY
             toggle?.setOnMouseClicked{
                 toggleRoute(item.id, item.context)
                 isEnabled = !isEnabled
+                toggle?.text = if (isEnabled) "stop" else "Start"
             }
         }
     }
