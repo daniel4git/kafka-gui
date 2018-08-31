@@ -23,15 +23,16 @@ class LogController : Initializable {
     @FXML var messages: ListView<String>? = null
     @FXML var topic: TextField? = null
     @FXML var isPattern: CheckBox? = null
-    @FXML var fake: CheckBox? = null
-    @FXML var collect: CheckBox? = null
     @FXML var topicList: ListView<TopicListener>? = null
+    @FXML var deleteButton: Button? = null
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
         camelContext.start()
         camelContext.addRoutes(Faker())
         camelContext.addRoutes(Recorder())
         camelContext.addRoutes(GuiEndpoint(messages))
+
+        topicList?.setCellFactory { TopicRow() }
     }
 
     fun addTopic() {
@@ -40,19 +41,24 @@ class LogController : Initializable {
 
         if (topic.isNotEmpty()) {
             val topicListener = TopicListener(topic, isPattern)
-            addRoutes(topicListener, camelContext)
+            addRoute(topicListener, camelContext)
             topics.add(topicListener)
         }
     }
 
     fun toggleFakeData() {
         toggleRoute("fake", camelContext)
-        fake!!.isSelected = !fake!!.isSelected
     }
 
     fun toggleCollectData() {
         toggleRoute("tap", camelContext)
-        collect!!.isSelected = !collect!!.isSelected
+    }
+
+    fun delete() {
+        topicList?.selectionModel?.selectedItems?.forEach {
+            removeRoute(it.id, camelContext)
+            topics.remove(it)
+        }
     }
 }
 

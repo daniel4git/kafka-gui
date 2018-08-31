@@ -14,8 +14,15 @@ fun toggleRoute(routeId: String, camelContext: CamelContext) {
     }
 }
 
-fun addRoutes(builder: RouteBuilder, camelContext: CamelContext) {
+fun addRoute(builder: RouteBuilder, camelContext: CamelContext) {
     launch {
         camelContext.addRoutes(builder)
+    }
+}
+
+fun removeRoute(routeId: String, camelContext: CamelContext) {
+    launch {
+        camelContext.stopRoute(routeId)
+        camelContext.removeRoute(routeId)
     }
 }
