@@ -22,6 +22,7 @@ class LogController : Initializable {
     @FXML lateinit var messages: ListView<String>
     @FXML lateinit var topic: TextField
     @FXML lateinit var topicList: ListView<TopicListener>
+    @FXML lateinit var kafkahost: TextField
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
         topicList.setCellFactory { TopicRow() }
@@ -34,7 +35,7 @@ class LogController : Initializable {
 
     fun addTopic() {
         if (topic.text.isNotEmpty()) {
-            val topicListener = TopicListener(topic.text)
+            val topicListener = TopicListener(topic.text, kafkahost.text)
             routeActions.addRoute(topicListener)
             topics.add(topicListener)
         }

@@ -2,3 +2,8 @@
     -fx-font-size: 14.0;
     -fx-font-family: Menlo;
 }
+
+.delete-button {
+    -fx-background-color:  #bf2626;
+    -fx-text-fill: white;
+}
