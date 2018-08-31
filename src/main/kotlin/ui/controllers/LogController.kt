@@ -13,6 +13,8 @@ import routes.Recorder
 import routes.TopicListener
 import java.net.URL
 import java.util.*
+import javafx.application.Platform
+
 
 class LogController : Initializable {
 
@@ -31,6 +33,10 @@ class LogController : Initializable {
         routeActions.addRoute(Recorder())
         routeActions.addRoute(GuiEndpoint(messages))
         routeActions.start()
+
+        // This is a hack to get the prompt text to show up on the
+        // topic text field when first booted
+        Platform.runLater { topic.parent.requestFocus() }
     }
 
     fun addTopic() {
