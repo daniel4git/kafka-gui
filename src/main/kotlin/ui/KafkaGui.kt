@@ -7,22 +7,28 @@ import javafx.scene.Parent
 import javafx.scene.Scene
 import javafx.stage.Stage
 import javafx.stage.WindowEvent
+import javafx.util.Callback
+import org.apache.camel.impl.DefaultCamelContext
+import routes.Faker
+import routes.GuiEndpoint
+import routes.Recorder
+import ui.controllers.LogController
+import ui.controllers.RouteActions
 
 class KafkaGui : Application() {
 
     override fun start(stage: Stage) {
         val fxmlLoader = FXMLLoader(javaClass.getResource("/fxml/KafkaGui.fxml"))
-        val parent: Parent = fxmlLoader.load()
-        val scene = Scene(parent, 800.0, 600.0)
+        val root: Parent = fxmlLoader.load()
 
+        val scene = Scene(root, 800.0, 600.0)
         scene.stylesheets.add(javaClass.getResource("/styles.css").toExternalForm())
 
+        stage.onCloseRequest = EventHandler<WindowEvent> { System.exit(0) }
         stage.title = "Kafka Message Viewer"
         stage.scene = scene
         stage.isResizable = true
         stage.show()
-
-        stage.onCloseRequest = EventHandler<WindowEvent> { System.exit(0) }
     }
 
     companion object {

@@ -11,9 +11,6 @@
       <Label layoutX="14.0" layoutY="14.0" text="Topic"/>
       <TextField fx:id="topic" layoutX="14.0" layoutY="35.0" prefHeight="27.0" prefWidth="476.0"
                  promptText=".*search.*"/>
-      <Label layoutX="517.0" layoutY="14.0" text="Is Pattern"/>
-      <CheckBox fx:id="isPattern" alignment="CENTER" layoutX="538.0" layoutY="40.0" mnemonicParsing="false"
-                prefHeight="18.0" prefWidth="13.0"/>
       <Button layoutX="608.0" layoutY="35.0" mnemonicParsing="false" onMouseClicked="#addTopic" text="Add"/>
       <ListView fx:id="topicList" items="${controller.topics}" layoutX="17.0" layoutY="71.0" prefHeight="480.0"
                 prefWidth="632.0"/>
@@ -22,7 +19,7 @@
                 text="Generate fake data"/>
       <CheckBox layoutX="334.0" layoutY="559.0" mnemonicParsing="false" onAction="#toggleCollectData"
                 text="Collect messages"/>
-      <Button fx:id="deleteButton" layoutX="179.0" layoutY="555.0" mnemonicParsing="false" onMouseClicked="#delete"
+      <Button layoutX="179.0" layoutY="555.0" mnemonicParsing="false" onMouseClicked="#deleteTopic"
               text="Delete"/>
     </AnchorPane>
   </Tab>

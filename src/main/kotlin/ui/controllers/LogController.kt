@@ -4,9 +4,8 @@ import javafx.collections.FXCollections
 import javafx.collections.ObservableList
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
-import javafx.scene.control.*
-import kotlinx.coroutines.experimental.launch
-import org.apache.camel.builder.RouteBuilder
+import javafx.scene.control.ListView
+import javafx.scene.control.TextField
 import org.apache.camel.impl.DefaultCamelContext
 import routes.Faker
 import routes.GuiEndpoint
@@ -17,48 +16,43 @@ import java.util.*
 
 class LogController : Initializable {
 
-    private val camelContext = DefaultCamelContext()
     var topics: ObservableList<TopicListener> = FXCollections.observableArrayList<TopicListener>()
+    lateinit var routeActions: RouteActions
 
-    @FXML var messages: ListView<String>? = null
-    @FXML var topic: TextField? = null
-    @FXML var isPattern: CheckBox? = null
-    @FXML var topicList: ListView<TopicListener>? = null
-    @FXML var deleteButton: Button? = null
+    @FXML lateinit var messages: ListView<String>
+    @FXML lateinit var topic: TextField
+    @FXML lateinit var topicList: ListView<TopicListener>
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
-        camelContext.start()
-        camelContext.addRoutes(Faker())
-        camelContext.addRoutes(Recorder())
-        camelContext.addRoutes(GuiEndpoint(messages))
-
-        topicList?.setCellFactory { TopicRow() }
+        topicList.setCellFactory { TopicRow() }
+        routeActions = RouteActions(DefaultCamelContext())
+        routeActions.addRoute(Faker())
+        routeActions.addRoute(Recorder())
+        routeActions.addRoute(GuiEndpoint(messages))
+        routeActions.start()
     }
 
     fun addTopic() {
-        val topic = topic?.text ?: ""
-        val isPattern = isPattern?.isSelected ?: false
-
-        if (topic.isNotEmpty()) {
-            val topicListener = TopicListener(topic, isPattern)
-            addRoute(topicListener, camelContext)
+        if (topic.text.isNotEmpty()) {
+            val topicListener = TopicListener(topic.text)
+            routeActions.addRoute(topicListener)
             topics.add(topicListener)
         }
     }
 
+    fun deleteTopic() {
+        topicList.selectionModel.selectedItems.forEach {
+            routeActions.removeRoute(it.id)
+            topics.remove(it)
+        }
+    }
+
     fun toggleFakeData() {
-        toggleRoute("fake", camelContext)
+        routeActions.toggleRoute("fake")
     }
 
     fun toggleCollectData() {
-        toggleRoute("tap", camelContext)
-    }
-
-    fun delete() {
-        topicList?.selectionModel?.selectedItems?.forEach {
-            removeRoute(it.id, camelContext)
-            topics.remove(it)
-        }
+        routeActions.toggleRoute("tap")
     }
 }
 
