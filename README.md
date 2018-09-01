@@ -3,7 +3,7 @@ Tap into Kafka
 
 
 ## Getting Started
-You can grab the latest release [here](), or [build it yourself](#Building).
+You can grab the latest release [here](https://github.com/spearskw/kafka-gui/releases/download/0.1/kafka-gui-0.1.jar), or [build it yourself](#Building).
 
 Console output can be important, so it is best to run it from the command line
 via `java -jar <path-to-jar>`. 
@@ -51,6 +51,6 @@ The `routes` folder defines how messages will flow through the system. I want
 to keep the routes as isolated and pure as possible.
 
 The layout and structure of the UI is kept to fxml and css as much as possible.
-I drag-n-drop the UI using [gluon]() like a cretin.
+I drag-n-drop the UI using [gluon](https://gluonhq.com/products/scene-builder/) like a cretin.
 
 The starting point of the application is in `KafkaGui`.
