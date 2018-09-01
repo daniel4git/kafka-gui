@@ -3,7 +3,8 @@ Tap into Kafka
 
 
 ## Getting Started
-You can grab the latest release [here](https://github.com/spearskw/kafka-gui/releases/download/0.1/kafka-gui-0.1.jar), or [build it yourself](#Building).
+You can grab the latest release [here](https://github.com/spearskw/kafka-gui/releases/download/0.1/kafka-gui-0.1.jar),
+or [build it yourself](#building).
 
 Console output can be important, so it is best to run it from the command line
 via `java -jar <path-to-jar>`. 
