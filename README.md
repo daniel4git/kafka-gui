@@ -30,7 +30,7 @@ the `Delete` button
 #### Gotchas
 This software is very much early stages, and has no error handling.
 It can take several seconds to successfully subscribe to or remove topics,
-and tens of seconds for things to fail (because there's a certain number of retries)
+and tens of seconds for things to fail (because there's a certain number of retries).
 There are no indications in the UI when things fail, therefore
 watch the console logs if things seem amiss.
 
@@ -42,7 +42,7 @@ root directory. This will produce a .jar (with all the dependencies) in the `tar
 This project is using [Apache Camel](https://github.com/apache/camel/blob/master/README.md)
 for message routing, [JavaFX](https://docs.oracle.com/javase/8/javafx/get-started-tutorial/jfx-overview.htm)
 for the GUI, and [Kotlin](https://kotlinlang.org/docs/reference/) for everything else.
-_I know, I know... щ(ಥДಥщ)_.
+_I know, I know..._ щ(ಥДಥщ).
 
 Why such a weird stack? It started with me wanting to play around with routing messages
 from kafka to and through other systems, so I wanted to use Camel's integration DSL.

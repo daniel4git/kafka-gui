@@ -7,13 +7,6 @@ import javafx.scene.Parent
 import javafx.scene.Scene
 import javafx.stage.Stage
 import javafx.stage.WindowEvent
-import javafx.util.Callback
-import org.apache.camel.impl.DefaultCamelContext
-import routes.Faker
-import routes.GuiEndpoint
-import routes.Recorder
-import ui.controllers.LogController
-import ui.controllers.RouteActions
 
 class KafkaGui : Application() {
 

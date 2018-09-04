@@ -4,6 +4,15 @@
 }
 
 .delete-button {
-    -fx-background-color:  #bf2626;
+    -fx-base:  #bf2626;
     -fx-text-fill: white;
+}
+
+.search-field {
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.3), 5, 0.2, 0, 2);
+}
+
+.messages {
+    -fx-selection-bar: rgba(0,0,0,0.3);
+    -fx-selection-bar-non-focused: rgba(0,0,0,0.3);
 }

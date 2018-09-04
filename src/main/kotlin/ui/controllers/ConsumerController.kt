@@ -14,20 +14,28 @@ import routes.TopicListener
 import java.net.URL
 import java.util.*
 import javafx.application.Platform
+import javafx.scene.input.KeyCode
+import javafx.scene.input.KeyCodeCombination
+import javafx.scene.input.KeyCombination
+import javafx.scene.input.KeyEvent
+import utils.RouteActions
 
 
-class LogController : Initializable {
+class ConsumerController : Initializable {
 
     var topics: ObservableList<TopicListener> = FXCollections.observableArrayList<TopicListener>()
     lateinit var routeActions: RouteActions
 
-    @FXML lateinit var messages: ListView<String>
+    @FXML lateinit var messages: ListView<HighlightMessage>
     @FXML lateinit var topic: TextField
     @FXML lateinit var topicList: ListView<TopicListener>
     @FXML lateinit var kafkahost: TextField
+    @FXML lateinit var searchField: TextField
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
         topicList.setCellFactory { TopicRow() }
+        messages.setCellFactory { LogItem() }
+
         routeActions = RouteActions(DefaultCamelContext())
         routeActions.addRoute(Faker())
         routeActions.addRoute(Recorder())
@@ -61,5 +69,23 @@ class LogController : Initializable {
     fun toggleCollectData() {
         routeActions.toggleRoute("tap")
     }
+
+    fun handleKeyPress(keyEvent: KeyEvent) {
+        val findMac = KeyCodeCombination(KeyCode.F, KeyCombination.META_DOWN)
+        if (findMac.match(keyEvent)) {
+            searchField.isVisible = !searchField.isVisible
+            searchField.requestFocus()
+        } else if (keyEvent.code == KeyCode.ESCAPE) {
+            searchField.isVisible = false
+        }
+    }
+
+    fun search() {
+        messages.items.forEach {
+            it.searchTerm = searchField.text
+        }
+        messages.refresh()
+    }
 }
 
+data class HighlightMessage(val message: String, var searchTerm: String = "")

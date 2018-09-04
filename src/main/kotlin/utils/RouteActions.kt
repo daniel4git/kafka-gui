@@ -1,4 +1,4 @@
-package ui.controllers
+package utils
 
 import kotlinx.coroutines.experimental.launch
 import org.apache.camel.CamelContext
