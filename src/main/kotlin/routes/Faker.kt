@@ -7,11 +7,11 @@ class Faker : RouteBuilder() {
         from("timer:foo?period=500")
             .routeId("fake")
             .autoStartup(false)
-            .wireTap("seda:tap")
             .process {
                 it?.out?.setHeader("kafka.TOPIC", "fake")
                 it?.out?.body = "{\"message\": \"Hey hey What's up y'all\"}"
             }
+            .wireTap("seda:tap")
             .to("seda:kafka")
     }
 }
