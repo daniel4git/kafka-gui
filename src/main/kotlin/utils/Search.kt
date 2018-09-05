@@ -4,23 +4,23 @@ import javafx.scene.paint.Color
 import javafx.scene.text.Text
 import javafx.scene.text.TextFlow
 
-fun buildHighlight(text: String, searchTerm: String): TextFlow {
+fun highlight(text: String, searchTerm: String, ignoreCase: Boolean): TextFlow {
     if (searchTerm.isEmpty()) {
         return TextFlow(Text(text))
     }
 
-    val parts = text.split(searchTerm).flatMap { it ->
-        listOf(Text(it), highlight(searchTerm))
-    }
+    // This regex lets us keep the search term when we apply the split function
+    val regex = "((?<=$searchTerm)|(?=$searchTerm))"
+        .toRegex(RegexOption.IGNORE_CASE)
 
-    val reducedParts = parts
-        .slice(0 until parts.lastIndex)
-        .filter{it.text.isNotEmpty()}
+    val richText = text
+        .split(regex)
+        .map { if (it.equals(searchTerm, ignoreCase)) createHighlight(it) else Text(it) }
 
-    return TextFlow(*reducedParts.toTypedArray())
+    return TextFlow(*richText.toTypedArray())
 }
 
-fun highlight(s: String): Text {
+private fun createHighlight(s: String): Text {
     val text = Text(s)
     text.fill = Color.ORANGE
     return text

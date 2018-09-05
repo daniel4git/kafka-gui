@@ -1,7 +1,7 @@
 package ui.controllers
 
 import javafx.scene.control.ListCell
-import utils.buildHighlight
+import utils.highlight
 
 
 class LogItem : ListCell<HighlightMessage>() {
@@ -13,6 +13,6 @@ class LogItem : ListCell<HighlightMessage>() {
             return
         }
 
-        graphic = buildHighlight(item.message, item.searchTerm)
+        graphic = highlight(item.message, item.searchTerm, true)
     }
 }
