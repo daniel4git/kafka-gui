@@ -9,7 +9,7 @@ class Faker : RouteBuilder() {
             .autoStartup(false)
             .process {
                 it?.out?.setHeader("kafka.TOPIC", "fake")
-                it?.out?.body = "{\"message\": \"Hey hey What's up y'all\"}"
+                it?.out?.body = "{\"message\": \"Hey hey, What's up y'all\"}"
             }
             .wireTap("seda:tap")
             .to("seda:kafka")
