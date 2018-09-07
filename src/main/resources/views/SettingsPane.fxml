@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
+            prefHeight="200.0" prefWidth="200.0">
+  <children>
+    <TextField fx:id="kafkahost" layoutX="14.0" layoutY="40.0" prefHeight="27.0" prefWidth="311.0"
+               text="localhost:9092"/>
+    <Label layoutX="15.0" layoutY="18.0" text="Kafka Host"/>
+    <CheckBox alignment="CENTER" contentDisplay="TOP" layoutX="16.0" layoutY="116.0" mnemonicParsing="false"
+              nodeOrientation="LEFT_TO_RIGHT" onAction="#toggleFakeData" text="Generate fake data"/>
+    <CheckBox layoutX="16.0" layoutY="88.0" mnemonicParsing="false" onAction="#toggleCollectData"
+              text="Record messages"/>
+  </children>
+</AnchorPane>

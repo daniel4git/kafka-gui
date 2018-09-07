@@ -15,6 +15,8 @@
     <spock.version>1.2-RC1-groovy-2.5</spock.version>
     <camel-version>2.22.0</camel-version>
     <log4j-version>2.11.1</log4j-version>
+    <main.class>ui.Main</main.class>
+    <tornadofx.version>1.7.17</tornadofx.version>
   </properties>
 
   <build>
@@ -30,7 +32,7 @@
           <transformers>
             <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
               <manifestEntries>
-                <Main-Class>ui.KafkaGui</Main-Class>
+                <Main-Class>${main.class}</Main-Class>
               </manifestEntries>
             </transformer>
           </transformers>
@@ -50,7 +52,7 @@
         <artifactId>appbundle-maven-plugin</artifactId>
         <version>1.2.0</version>
         <configuration>
-          <mainClass>ui.KafkaGui</mainClass>
+          <mainClass>${main.class}</mainClass>
           <generateDiskImageFile>true</generateDiskImageFile>
           <jrePath>${java.home}/../../../</jrePath>
           <iconFile>icon.icns</iconFile>
@@ -219,6 +221,11 @@
       <groupId>com.jfoenix</groupId>
       <artifactId>jfoenix</artifactId>
       <version>8.0.4</version>
+    </dependency>
+    <dependency>
+      <groupId>no.tornado</groupId>
+      <artifactId>tornadofx</artifactId>
+      <version>${tornadofx.version}</version>
     </dependency>
 
     <dependency>
