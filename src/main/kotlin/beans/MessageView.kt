@@ -1,19 +1,26 @@
 package beans
 
 import javafx.application.Platform
-import javafx.scene.control.ListView
-import org.apache.camel.Body
-import org.apache.camel.Header
+import tornadofx.*
 import ui.views.HighlightMessage
+import ui.views.LogPane
+import ui.views.SettingsPane
+import utils.formatJson
 
-class MessageView(private val listView: ListView<HighlightMessage>) {
-    fun add(
-        @Header("kafka.TOPIC") topic: String,
-        @Body payload: String
-    ) {
+class MessageView {
+    fun add(topic: String, payload: String) {
         Platform.runLater {
-            listView.items.add(HighlightMessage("$topic\n$payload"))
-            listView.scrollTo(listView.items.size - 1)
+            val doFormat = find(SettingsPane::class).formatJson.isSelected
+            val messageList = find(LogPane::class).messageList
+
+            val message = if (doFormat) {
+                formatJson(payload)
+            } else {
+                payload
+            }
+
+            messageList.items.add(HighlightMessage("$topic\n$message"))
+            messageList.scrollTo(messageList.items.size - 1)
         }
     }
 }

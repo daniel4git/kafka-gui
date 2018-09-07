@@ -9,7 +9,7 @@ class TopicListenerTest extends Specification {
         topic.isPattern == isPattern
 
         where:
-        topic                                               | isPattern
+        topic                                           | isPattern
         new TopicListener("369fine", "fake")            | false
         new TopicListener("topic.main_command", "fake") | false
         new TopicListener("totes.*regex", "fake")       | true
