@@ -36,17 +36,12 @@ watch the console logs if things seem amiss.
 
 ## Building
 As a typical maven project the only thing you need to do is `mvn package` from the
-root directory. This will produce a .jar (with all the dependencies) in the `target` folder.
+root directory. This will produce two `.jar` files (one with all the dependencies included and one without), as well as a `.dmg` and `.app` for running on a Mac. You can find all of these in the `target` directory.
 
 ## Hacking
 This project is using [Apache Camel](https://github.com/apache/camel/blob/master/README.md)
-for message routing, [JavaFX](https://docs.oracle.com/javase/8/javafx/get-started-tutorial/jfx-overview.htm)
+for message routing, [TornadoFX](https://github.com/edvin/tornadofx)
 for the GUI, and [Kotlin](https://kotlinlang.org/docs/reference/) for everything else.
-_I know, I know..._ щ(ಥДಥщ).
-
-Why such a weird stack? It started with me wanting to play around with routing messages
-from kafka to and through other systems, so I wanted to use Camel's integration DSL.
-Once in the realm of Java, I'm kinda stuck with JavaFX.
 
 The `routes` folder defines how messages will flow through the system. I want
 to keep the routes as isolated and pure as possible.
@@ -54,4 +49,6 @@ to keep the routes as isolated and pure as possible.
 The layout and structure of the UI is kept to fxml and css as much as possible.
 I drag-n-drop the UI using [gluon](https://gluonhq.com/products/scene-builder/) like a cretin.
 
-The starting point of the application is in `KafkaGui`.
+The entry point of the application is [here](https://github.com/spearskw/kafka-gui/blob/master/src/main/kotlin/ui/Main.kt)
+
+Why such a weird stack? It started with me wanting to play around with routing messages between Kafka, Postgres, Elasticsearch, and a REST controller. Camel provides a nice Domain Specific Language that let's me focus on how messages flow through the system. Since Camel is written in Java, I need a JVM stack.
