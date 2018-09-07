@@ -4,18 +4,28 @@ import javafx.scene.paint.Color
 import javafx.scene.text.Text
 import javafx.scene.text.TextFlow
 
-fun highlight(text: String, searchTerm: String, ignoreCase: Boolean): TextFlow {
+fun highlight(
+    text: String,
+    searchTerm: String,
+    ignoreCase: Boolean
+): TextFlow {
+    
     if (searchTerm.isEmpty()) {
         return TextFlow(Text(text))
     }
 
-    // This regex lets us keep the search term when we apply the split function
-    val regex = "((?<=$searchTerm)|(?=$searchTerm))"
+    // Normally we lose the delimiter we split on, but we want to keep it
+    val keepSearchTerm = "((?<=$searchTerm)|(?=$searchTerm))"
         .toRegex(RegexOption.IGNORE_CASE)
 
     val richText = text
-        .split(regex)
-        .map { if (it.equals(searchTerm, ignoreCase)) createHighlight(it) else Text(it) }
+        .split(keepSearchTerm)
+        .map {
+            if (it.equals(searchTerm, ignoreCase))
+                createHighlight(it)
+            else
+                Text(it)
+        }
 
     return TextFlow(*richText.toTypedArray())
 }
