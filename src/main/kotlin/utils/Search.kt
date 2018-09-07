@@ -15,7 +15,8 @@ fun highlight(
     }
 
     // Normally we lose the delimiter we split on, but we want to keep it
-    val keepSearchTerm = "((?<=$searchTerm)|(?=$searchTerm))"
+    val sanitizedSearch = Regex.escape(searchTerm)
+    val keepSearchTerm = "((?<=$sanitizedSearch)|(?=$sanitizedSearch))"
         .toRegex(RegexOption.IGNORE_CASE)
 
     val richText = text

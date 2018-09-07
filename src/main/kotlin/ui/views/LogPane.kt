@@ -1,5 +1,6 @@
 package ui.views
 
+import javafx.application.Platform
 import javafx.scene.control.ListCell
 import javafx.scene.control.ListView
 import javafx.scene.control.TextField
@@ -9,6 +10,7 @@ import javafx.scene.input.KeyCombination
 import javafx.scene.input.KeyEvent
 import javafx.scene.layout.StackPane
 import tornadofx.*
+import utils.formatJson
 import utils.highlight
 
 class LogPane : View("Log") {
@@ -29,13 +31,18 @@ class LogPane : View("Log") {
         } else if (keyEvent.code == KeyCode.ESCAPE) {
             searchField.isVisible = false
         }
+        search()
     }
 
     fun search() {
         messageList.items.forEach {
-            it.searchTerm = searchField.text
+            if (searchField.isVisible) {
+                it.searchTerm = searchField.text
+            } else {
+                it.searchTerm = ""
+            }
         }
-        messageList.refresh()
+        Platform.runLater { messageList.refresh() }
     }
 }
 
