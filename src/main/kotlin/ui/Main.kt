@@ -22,16 +22,12 @@ class Main: App(MainView::class) {
 
 class MainView : View("Kafka") {
 
-    val routeActions: RouteActions
+    val routeActions = RouteActions(DefaultCamelContext())
 
     init {
-        val registry =  SimpleRegistry()
-        registry["messageView"] = MessageView()
-        routeActions = RouteActions(DefaultCamelContext(registry))
-
         routeActions.addRoute(Faker())
         routeActions.addRoute(Recorder())
-        routeActions.addRoute(GuiEndpoint())
+        routeActions.addRoute(GuiEndpoint(MessageView()))
         routeActions.start()
     }
 

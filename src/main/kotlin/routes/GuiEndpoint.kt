@@ -1,11 +1,11 @@
 package routes
 
+import beans.MessageView
 import org.apache.camel.builder.RouteBuilder
 
-class GuiEndpoint : RouteBuilder() {
+class GuiEndpoint(private val messageView: MessageView) : RouteBuilder() {
     override fun configure() {
         from("seda:kafka")
-            .bean("messageView",
-                "add(\${header.kafka.TOPIC},\${body})")
+            .bean(messageView)
     }
 }
