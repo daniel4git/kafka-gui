@@ -24,20 +24,21 @@
         <Insets bottom="5.0"/>
       </GridPane.margin>
     </Label>
-    <TextField fx:id="topic" promptText=".*search.*" GridPane.rowIndex="1" GridPane.valignment="TOP"/>
+    <TextField fx:id="topic" promptText=".*search.*" GridPane.rowIndex="1" GridPane.valignment="TOP"
+               onKeyPressed="#handleKeyPress"/>
     <Button mnemonicParsing="false" onMouseClicked="#addTopic" text="Add" GridPane.columnIndex="1"
             GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="TOP">
       <cursor>
         <Cursor fx:constant="HAND"/>
       </cursor>
     </Button>
+    <ListView fx:id="topicList" prefHeight="457.0" prefWidth="539.0"
+              GridPane.columnSpan="2147483647" GridPane.rowIndex="2"/>
     <Button mnemonicParsing="false" onMouseClicked="#deleteTopic" styleClass="delete-button" text="Delete"
             GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
       <cursor>
         <Cursor fx:constant="HAND"/>
       </cursor>
     </Button>
-    <ListView fx:id="topicList" prefHeight="457.0" prefWidth="539.0"
-              GridPane.columnSpan="2147483647" GridPane.rowIndex="2"/>
   </children>
 </GridPane>

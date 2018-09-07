@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
-
-<AnchorPane prefHeight="200.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="200.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8.0.171"
+            xmlns:fx="http://javafx.com/fxml/1">
   <children>
-    <TextField fx:id="kafkahost" layoutX="14.0" layoutY="40.0" prefHeight="27.0" prefWidth="311.0" text="localhost:9092" />
-    <Label layoutX="15.0" layoutY="18.0" text="Kafka Host" />
-    <CheckBox alignment="CENTER" contentDisplay="TOP" layoutX="16.0" layoutY="116.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#toggleFakeData" text="Generate fake data" />
-    <CheckBox layoutX="16.0" layoutY="88.0" mnemonicParsing="false" onAction="#toggleCollectData" text="Record messages" />
-    <CheckBox fx:id="formatJson" layoutX="16.0" layoutY="145.0" mnemonicParsing="false" selected="true" text="Format JSON" />
+    <Label layoutX="15.0" layoutY="18.0" text="Kafka Host"/>
+    <TextField fx:id="kafkahost" layoutX="14.0" layoutY="40.0" prefHeight="27.0" prefWidth="311.0"
+               text="localhost:9092"/>
+    <CheckBox layoutX="16.0" layoutY="88.0" mnemonicParsing="false" onAction="#toggleCollectData"
+              text="Record messages"/>
+
+    <CheckBox alignment="CENTER" contentDisplay="TOP" layoutX="16.0" layoutY="116.0" mnemonicParsing="false"
+              nodeOrientation="LEFT_TO_RIGHT" onAction="#toggleFakeData" text="Generate fake data"/>
+    <CheckBox fx:id="formatJson" layoutX="16.0" layoutY="145.0" mnemonicParsing="false" selected="true"
+              text="Format JSON"/>
   </children>
 </AnchorPane>

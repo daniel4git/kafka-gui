@@ -4,6 +4,8 @@ import javafx.application.Platform
 import javafx.scene.control.ListCell
 import javafx.scene.control.ListView
 import javafx.scene.control.TextField
+import javafx.scene.input.KeyCode
+import javafx.scene.input.KeyEvent
 import javafx.scene.layout.GridPane
 import routes.TopicListener
 import tornadofx.*
@@ -20,6 +22,12 @@ class ConsumerPane : View("Consumers") {
         Platform.runLater { topic.parent.requestFocus() }
     }
 
+    fun handleKeyPress(keyEvent: KeyEvent) {
+        if (KeyCode.ENTER == keyEvent.code) {
+            addTopic()
+        }
+    }
+
     fun addTopic() {
         if (topic.text.isNotEmpty()) {
             val topicListener = TopicListener(
@@ -28,6 +36,7 @@ class ConsumerPane : View("Consumers") {
             )
             find(MainView::class).routeActions.addRoute(topicListener)
             topicList.items.add(topicListener)
+            topic.text = ""
         }
     }
 
