@@ -11,7 +11,9 @@ import utils.formatJson
 class MessageView {
     fun add(@Header("kafka.TOPIC") topic: String, payload: String) {
         Platform.runLater {
-            val doFormat = find(SettingsPane::class).formatJson.isSelected
+
+//            val doFormat = find(SettingsPane::class).formatJson.isSelected
+            val doFormat = true
             val messageList = find(LogPane::class).messageList
 
             val message = if (doFormat) {

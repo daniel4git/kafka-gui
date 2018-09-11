@@ -9,6 +9,7 @@ import routes.Faker
 import routes.GuiEndpoint
 import routes.Recorder
 import tornadofx.*
+import ui.controllers.MainController
 import ui.views.ConsumerPane
 import ui.views.LogPane
 import ui.views.SettingsPane
@@ -22,13 +23,13 @@ class Main: App(MainView::class) {
 
 class MainView : View("Kafka") {
 
-    val routeActions = RouteActions(DefaultCamelContext())
+    val c : MainController by inject()
 
-    init {
-        routeActions.addRoute(Faker())
-        routeActions.addRoute(Recorder())
-        routeActions.addRoute(GuiEndpoint(MessageView()))
-        routeActions.start()
+    override fun onDock() {
+        c.routeActions.addRoute(Faker())
+        c.routeActions.addRoute(Recorder())
+        c.routeActions.addRoute(GuiEndpoint(MessageView()))
+        c.routeActions.start()
     }
 
     override val root = tabpane {
@@ -39,4 +40,8 @@ class MainView : View("Kafka") {
         tab(LogPane::class)
         tab(SettingsPane::class)
     }
+}
+
+fun main(args: Array<String>) {
+    launch<Main>(args)
 }

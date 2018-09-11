@@ -1,22 +1,27 @@
 package ui.views
 
-import javafx.scene.control.CheckBox
-import javafx.scene.control.TextField
-import javafx.scene.layout.AnchorPane
 import tornadofx.*
-import ui.MainView
+import ui.controllers.SettingsController
 
 class SettingsPane : View("Settings") {
-    override val root: AnchorPane by fxml("/views/SettingsPane.fxml")
 
-    val kafkahost: TextField by fxid()
-    val formatJson: CheckBox by fxid()
+    val c : SettingsController by inject()
 
-    fun toggleFakeData() {
-        find(MainView::class).routeActions.toggleRoute("fake")
-    }
-
-    fun toggleCollectData() {
-        find(MainView::class).routeActions.toggleRoute("tap")
+    override val root = vbox {
+        vbox {
+            label("Kafka Host")
+            textfield(c.kafkahost)
+            checkbox("Record messages", c.recordMessages) {
+                action {
+                    c.toggleCollectData()
+                }
+            }
+            checkbox("Generate fake data", c.generateFakeData) {
+                action {
+                    c.toggleFakeData()
+                }
+            }
+            checkbox("Format JSON", c.formatJson)
+        }
     }
 }
