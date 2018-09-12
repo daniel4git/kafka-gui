@@ -1,10 +1,8 @@
 package ui
 
-import beans.MessageView
+import ui.models.MessageModel
 import javafx.geometry.Side
 import javafx.scene.control.TabPane
-import org.apache.camel.impl.DefaultCamelContext
-import org.apache.camel.impl.SimpleRegistry
 import routes.Faker
 import routes.GuiEndpoint
 import routes.Recorder
@@ -13,7 +11,6 @@ import ui.controllers.MainController
 import ui.views.ConsumerPane
 import ui.views.LogPane
 import ui.views.SettingsPane
-import utils.RouteActions
 
 class Main: App(MainView::class) {
     init {
@@ -26,19 +23,28 @@ class MainView : View("Kafka") {
     val c : MainController by inject()
 
     override fun onDock() {
-        c.routeActions.addRoute(Faker())
-        c.routeActions.addRoute(Recorder())
-        c.routeActions.addRoute(GuiEndpoint(MessageView()))
-        c.routeActions.start()
+
+        val endpointArg = find<MessageModel>()  // fresh instance
+
+        // comes up w/o a glitch; keep fx stuff out of here
+        runAsync {
+            c.routeActions.addRoute(Faker())
+            c.routeActions.addRoute(Recorder())
+            c.routeActions.addRoute(GuiEndpoint(endpointArg))
+            c.routeActions.start()
+        }
     }
 
     override val root = tabpane {
-        tabClosingPolicy = TabPane.TabClosingPolicy.UNAVAILABLE
-        side = Side.LEFT
-
         tab(ConsumerPane::class)
         tab(LogPane::class)
         tab(SettingsPane::class)
+
+        tabClosingPolicy = TabPane.TabClosingPolicy.UNAVAILABLE
+        side = Side.LEFT
+
+        prefWidth = 1024.0
+        prefHeight = 768.0
     }
 }
 

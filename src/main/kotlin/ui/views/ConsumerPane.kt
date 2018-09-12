@@ -1,5 +1,6 @@
 package ui.views
 
+import javafx.geometry.Insets
 import javafx.geometry.Pos
 import javafx.scene.input.KeyCode
 import javafx.scene.layout.Priority
@@ -25,6 +26,7 @@ class ConsumerPane : View("Consumers") {
                     if( it.code == KeyCode.ENTER )
                         c.addTopic()
                 }
+                prefWidth = 600.0
             }
 
             hbox {
@@ -44,15 +46,19 @@ class ConsumerPane : View("Consumers") {
             }
             multiSelect(true)
             selTopicListeners.bind(selectionModel.selectedItems ) { it }
+            vgrow = Priority.ALWAYS
         }
 
         hbox {
             button("Delete") {
                 action { c.deleteTopic(selTopicListeners) }
+                addClass( Styles.deleteButton )
             }
             alignment = Pos.TOP_RIGHT
         }
-    }
 
+        padding = Insets(10.0)
+        spacing = 4.0
+    }
 
 }

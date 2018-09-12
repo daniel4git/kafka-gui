@@ -3,7 +3,6 @@ package ui.controllers
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.property.SimpleStringProperty
 import tornadofx.*
-import ui.MainView
 
 class SettingsController : Controller() {
 
