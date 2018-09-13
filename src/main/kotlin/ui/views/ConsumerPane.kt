@@ -1,7 +1,8 @@
 package ui.views
 
-import javafx.geometry.Insets
+import javafx.application.Platform
 import javafx.geometry.Pos
+import javafx.scene.Cursor
 import javafx.scene.input.KeyCode
 import javafx.scene.layout.Priority
 import routes.TopicListener
@@ -10,33 +11,38 @@ import ui.controllers.ConsumerController
 
 class ConsumerPane : View("Consumers") {
 
-    val c : ConsumerController by inject()
+    private val c: ConsumerController by inject()
 
-    val selTopicListeners = mutableListOf<TopicListener>().observable()
+    private val selTopicListeners = mutableListOf<TopicListener>().observable()
 
     override val root = vbox {
+        // This is here so that the prompt text is visible
+        // when the app is first started.
+        Platform.runLater { requestFocus() }
 
-        label("Topic")
+        label("Topic") {
+            paddingBottom = -5.0
+        }
 
         hbox {
+            spacing = 20.0
 
             textfield(c.topic) {
                 promptText = ".*search.*"
                 setOnKeyPressed {
-                    if( it.code == KeyCode.ENTER )
+                    if (it.code == KeyCode.ENTER)
                         c.addTopic()
                 }
-                prefWidth = 600.0
+                hgrow = Priority.ALWAYS
             }
 
-            hbox {
-                button("Add") {
-                    action {
-                        c.addTopic()
-                    }
+            button("Add") {
+                action {
+                    c.addTopic()
                 }
-                alignment = Pos.TOP_RIGHT
-                hgrow = Priority.ALWAYS
+
+                cursor = Cursor.HAND
+                minWidth = 50.0
             }
         }
 
@@ -45,20 +51,21 @@ class ConsumerPane : View("Consumers") {
                 text = it.topic
             }
             multiSelect(true)
-            selTopicListeners.bind(selectionModel.selectedItems ) { it }
+            selTopicListeners.bind(selectionModel.selectedItems) { it }
             vgrow = Priority.ALWAYS
         }
 
         hbox {
             button("Delete") {
                 action { c.deleteTopic(selTopicListeners) }
-                addClass( Styles.deleteButton )
+                cursor = Cursor.HAND
+                addClass(Styles.deleteButton)
             }
             alignment = Pos.TOP_RIGHT
         }
 
-        padding = Insets(10.0)
-        spacing = 4.0
+        paddingAll = 10.0
+        spacing = 10.0
     }
 
 }

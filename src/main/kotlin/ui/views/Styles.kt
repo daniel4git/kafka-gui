@@ -6,7 +6,6 @@ import tornadofx.*
 class Styles : Stylesheet() {
 
     companion object {
-
         val deleteButton by cssclass()
     }
 

@@ -35,6 +35,7 @@ class ConsumerController : Controller() {
     }
 
     fun deleteTopic(itemsToDelete : ObservableList<TopicListener>) {
+        itemsToDelete.forEach { main_c.routeActions.removeRoute(it.id) }
         topicList.removeAll( itemsToDelete )
     }
 }

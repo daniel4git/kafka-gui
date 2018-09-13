@@ -11,12 +11,9 @@ import ui.controllers.MainController
 import ui.views.ConsumerPane
 import ui.views.LogPane
 import ui.views.SettingsPane
+import ui.views.Styles
 
-class Main: App(MainView::class) {
-    init {
-        importStylesheet("/css/styles.css")
-    }
-}
+class Main: App(MainView::class, Styles::class)
 
 class MainView : View("Kafka") {
 

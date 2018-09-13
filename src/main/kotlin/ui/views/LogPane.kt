@@ -1,7 +1,6 @@
 package ui.views
 
 import beans.HighlightMessage
-import javafx.geometry.Insets
 import javafx.scene.control.ListView
 import javafx.scene.control.TextField
 import javafx.scene.input.KeyCode
@@ -9,34 +8,41 @@ import javafx.scene.input.KeyCodeCombination
 import javafx.scene.input.KeyCombination
 import javafx.scene.input.KeyEvent
 import javafx.scene.layout.Priority
+import javafx.scene.paint.Color
+import javafx.scene.text.Font
 import tornadofx.*
 import ui.controllers.LogController
 import utils.highlight
 
 class LogPane : View("Log") {
 
-    val c : LogController by inject()
+    private val c: LogController by inject()
 
-    var tfSearch : TextField by singleAssign()
+    var tfSearch: TextField by singleAssign()
 
-    var lv : ListView<HighlightMessage> by singleAssign()
+    var lv: ListView<HighlightMessage> by singleAssign()
 
     override val root = vbox {
         lv = listview(c.messageList) {
             cellFormat {
+                style {
+                    fontFamily = "Menlo"
+                }
                 graphic = highlight(item.message, item.searchTerm, true)
             }
             vgrow = Priority.ALWAYS
         }
         tfSearch = textfield(c.searchField) {
             setOnKeyReleased {
-                handleKeyPress(it)
+                search()
             }
+            managedProperty().bind(visibleProperty())
+            isVisible = false
         }
         setOnKeyPressed {
-            search()
+            handleKeyPress(it)
         }
-        padding = Insets(10.0)
+        paddingAll = 10.0
         spacing = 4.0
     }
 
@@ -54,7 +60,7 @@ class LogPane : View("Log") {
     fun search() {
         c.messageList.forEach {
             if (tfSearch.isVisible) {
-                it.searchTerm = c.searchField.value
+                it.searchTerm = c.searchField.valueSafe
             } else {
                 it.searchTerm = ""
             }
