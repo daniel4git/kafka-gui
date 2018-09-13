@@ -1,6 +1,5 @@
 package ui
 
-import ui.models.MessageModel
 import javafx.geometry.Side
 import javafx.scene.control.TabPane
 import routes.Faker
@@ -8,16 +7,16 @@ import routes.GuiEndpoint
 import routes.Recorder
 import tornadofx.*
 import ui.controllers.MainController
+import ui.models.MessageModel
 import ui.views.ConsumerPane
 import ui.views.LogPane
 import ui.views.SettingsPane
-import ui.views.Styles
 
-class Main: App(MainView::class, Styles::class)
+class Main : App(MainView::class)
 
 class MainView : View("Kafka") {
 
-    val c : MainController by inject()
+    private val c: MainController by inject()
 
     override fun onDock() {
 

@@ -5,6 +5,7 @@ import javafx.geometry.Pos
 import javafx.scene.Cursor
 import javafx.scene.input.KeyCode
 import javafx.scene.layout.Priority
+import javafx.scene.paint.Color
 import routes.TopicListener
 import tornadofx.*
 import ui.controllers.ConsumerController
@@ -59,7 +60,10 @@ class ConsumerPane : View("Consumers") {
             button("Delete") {
                 action { c.deleteTopic(selTopicListeners) }
                 cursor = Cursor.HAND
-                addClass(Styles.deleteButton)
+                style {
+                    baseColor = c("#bf2626")
+                    textFill = Color.WHITE
+                }
             }
             alignment = Pos.TOP_RIGHT
         }

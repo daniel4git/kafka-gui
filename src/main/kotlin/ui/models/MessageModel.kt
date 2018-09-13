@@ -1,12 +1,12 @@
 package ui.models
 
-import beans.HighlightMessage
 import org.apache.camel.Header
 import tornadofx.*
 import ui.controllers.SettingsController
 import utils.formatJson
 
 class MessageAddedEvent(val message : HighlightMessage) : FXEvent(EventBus.RunOn.BackgroundThread)
+class MessageChangedEvent : FXEvent(EventBus.RunOn.BackgroundThread)
 
 /**
  * Create this with find() since it's a Component to get CDI
