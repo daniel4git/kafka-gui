@@ -11,6 +11,7 @@ import javafx.scene.input.KeyCombination
 import javafx.scene.input.KeyEvent
 import tornadofx.*
 import ui.models.MessageChangedEvent
+import ui.models.SearchOpenedEvent
 
 class LogController : Controller() {
 
@@ -32,6 +33,7 @@ class LogController : Controller() {
         val findMac = KeyCodeCombination(KeyCode.F, KeyCombination.META_DOWN)
         if (findMac.match(keyEvent)) {
             searchIsVisible.value = true
+            fire(SearchOpenedEvent())
         } else if (keyEvent.code == KeyCode.ESCAPE) {
             searchIsVisible.value = false
         }

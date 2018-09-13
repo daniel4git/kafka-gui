@@ -1,9 +1,11 @@
 package ui.views
 
+import javafx.application.Platform
 import javafx.scene.layout.Priority
 import tornadofx.*
 import ui.controllers.LogController
 import ui.models.MessageChangedEvent
+import ui.models.SearchOpenedEvent
 import utils.highlight
 
 class LogPane : View("Log") {
@@ -25,6 +27,9 @@ class LogPane : View("Log") {
         }
 
         textfield(c.searchField) {
+            subscribe<SearchOpenedEvent> {
+                Platform.runLater { requestFocus() }
+            }
             setOnKeyReleased { c.search() }
             managedProperty().bind(visibleProperty())
             visibleWhen(c.searchIsVisible)
