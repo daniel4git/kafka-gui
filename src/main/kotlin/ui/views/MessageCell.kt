@@ -7,6 +7,7 @@ import ui.models.KafkaMessage
 import utils.formatJson
 import utils.highlight
 
+// TODO this should be a ListCellFragment
 class MessageCell(message: KafkaMessage) : View("Message") {
 
     private val controller: LogController by inject()

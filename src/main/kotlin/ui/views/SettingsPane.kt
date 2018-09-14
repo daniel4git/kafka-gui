@@ -1,6 +1,7 @@
 package ui.views
 
 import tornadofx.*
+import ui.controllers.FormatChangedEvent
 import ui.controllers.RouteController
 import ui.controllers.SettingsController
 
@@ -30,7 +31,11 @@ class SettingsPane : View("Settings") {
                     routes.toggle("fake", isSelected)
                 }
             }
-            checkbox("Format JSON", settings.formatJson)
+            checkbox("Format JSON", settings.formatJson) {
+                action {
+                    fire(FormatChangedEvent())
+                }
+            }
             spacing = 10.0
         }
         paddingAll = 10.0

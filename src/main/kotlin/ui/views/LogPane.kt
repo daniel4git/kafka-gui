@@ -3,6 +3,7 @@ package ui.views
 import javafx.application.Platform
 import javafx.scene.layout.Priority
 import tornadofx.*
+import ui.controllers.FormatChangedEvent
 import ui.controllers.LogController
 import ui.controllers.SearchOpenedEvent
 
@@ -13,6 +14,9 @@ class LogPane : View("Log") {
 
     override val root = vbox {
         listview(filteredMessages) {
+            subscribe<FormatChangedEvent> {
+                refresh()
+            }
             cellFormat {
                 graphic = MessageCell(it).root
             }

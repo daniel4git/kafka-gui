@@ -37,3 +37,4 @@ class LogController : Controller() {
 
 // TODO I don't know where to put this
 class SearchOpenedEvent : FXEvent(EventBus.RunOn.BackgroundThread)
+class FormatChangedEvent : FXEvent(EventBus.RunOn.BackgroundThread)
