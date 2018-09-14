@@ -1,13 +1,16 @@
-package utils
+package ui.controllers
 
-import kotlinx.coroutines.experimental.launch
-import org.apache.camel.CamelContext
 import org.apache.camel.builder.RouteBuilder
+import org.apache.camel.impl.DefaultCamelContext
+import tornadofx.*
 import java.util.concurrent.TimeUnit
 
-class RouteActions(private val camelContext: CamelContext) {
+class RouteController : Controller() {
+
+    private val camelContext = DefaultCamelContext()
+
     fun toggleRoute(routeId: String) {
-        launch {
+        runAsync {
             if (camelContext.getRouteStatus(routeId).isStarted) {
                 camelContext.stopRoute(routeId, 1, TimeUnit.SECONDS, false)
             } else {
@@ -17,20 +20,20 @@ class RouteActions(private val camelContext: CamelContext) {
     }
 
     fun addRoute(builder: RouteBuilder) {
-        launch {
+        runAsync {
             camelContext.addRoutes(builder)
         }
     }
 
     fun removeRoute(routeId: String) {
-        launch {
+        runAsync {
             camelContext.stopRoute(routeId, 1, TimeUnit.SECONDS, false)
             camelContext.removeRoute(routeId)
         }
     }
 
     fun start() {
-        launch {
+        runAsync {
             camelContext.start()
         }
     }

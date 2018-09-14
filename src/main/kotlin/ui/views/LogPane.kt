@@ -10,10 +10,10 @@ import utils.highlight
 
 class LogPane : View("Log") {
 
-    private val c: LogController by inject()
+    private val controller: LogController by inject()
 
     override val root = vbox {
-        listview(c.messageList) {
+        listview(controller.messageList) {
             subscribe<MessageChangedEvent> {
                 refresh()
             }
@@ -26,17 +26,17 @@ class LogPane : View("Log") {
             vgrow = Priority.ALWAYS
         }
 
-        textfield(c.searchField) {
+        textfield(controller.searchField) {
             subscribe<SearchOpenedEvent> {
                 Platform.runLater { requestFocus() }
             }
-            setOnKeyReleased { c.search() }
+            setOnKeyReleased { controller.search() }
             managedProperty().bind(visibleProperty())
-            visibleWhen(c.searchIsVisible)
+            visibleWhen(controller.searchIsVisible)
         }
 
         setOnKeyPressed {
-            c.handleKeyPress(it)
+            controller.handleKeyPress(it)
         }
 
         paddingAll = 10.0

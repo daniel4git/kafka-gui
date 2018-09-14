@@ -6,8 +6,7 @@ import routes.Faker
 import routes.GuiEndpoint
 import routes.Recorder
 import tornadofx.*
-import ui.controllers.MainController
-import ui.models.MessageModel
+import ui.controllers.RouteController
 import ui.views.ConsumerPane
 import ui.views.LogPane
 import ui.views.SettingsPane
@@ -16,19 +15,13 @@ class Main : App(MainView::class)
 
 class MainView : View("Kafka") {
 
-    private val c: MainController by inject()
+    private val routes: RouteController by inject()
 
     override fun onDock() {
-
-        val endpointArg = find<MessageModel>()  // fresh instance
-
-        // comes up w/o a glitch; keep fx stuff out of here
-        runAsync {
-            c.routeActions.addRoute(Faker())
-            c.routeActions.addRoute(Recorder())
-            c.routeActions.addRoute(GuiEndpoint(endpointArg))
-            c.routeActions.start()
-        }
+        routes.addRoute(Faker())
+        routes.addRoute(Recorder())
+        routes.addRoute(GuiEndpoint(find())) // TODO this is too magical
+        routes.start()
     }
 
     override val root = tabpane {

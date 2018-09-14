@@ -11,15 +11,14 @@ class SettingsController : Controller() {
     val generateFakeData = SimpleBooleanProperty()
     val formatJson = SimpleBooleanProperty()
 
-    // see notes on fronting controllers in ConsumerController.kt
-    val main_c : MainController by inject()
+    private val routes : RouteController by inject()
 
     fun toggleFakeData() {
-        main_c.routeActions.toggleRoute("fake")
+        routes.toggleRoute("fake")
     }
 
     fun toggleCollectData() {
-        main_c.routeActions.toggleRoute("tap")
+        routes.toggleRoute("tap")
     }
 
 }

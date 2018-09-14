@@ -5,7 +5,7 @@ import ui.controllers.SettingsController
 
 class SettingsPane : View("Settings") {
 
-    private val c: SettingsController by inject()
+    private val settings: SettingsController by inject()
 
     override val root = vbox {
         vbox {
@@ -13,22 +13,22 @@ class SettingsPane : View("Settings") {
                 paddingBottom = -5.0
             }
             hbox {
-                textfield(c.kafkahost) {
+                textfield(settings.kafkahost) {
                     prefWidth = 300.0
                 }
                 paddingBottom = 10.0
             }
-            checkbox("Record messages", c.recordMessages) {
+            checkbox("Record messages", settings.recordMessages) {
                 action {
-                    c.toggleCollectData()
+                    settings.toggleCollectData()
                 }
             }
-            checkbox("Generate fake data", c.generateFakeData) {
+            checkbox("Generate fake data", settings.generateFakeData) {
                 action {
-                    c.toggleFakeData()
+                    settings.toggleFakeData()
                 }
             }
-            checkbox("Format JSON", c.formatJson) {
+            checkbox("Format JSON", settings.formatJson) {
                 isSelected = true
             }
             spacing = 10.0
