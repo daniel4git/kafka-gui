@@ -26,13 +26,13 @@ class LogPane : View("Log") {
             vgrow = Priority.ALWAYS
         }
 
-        textfield(controller.searchField) {
+        textfield(controller.searchTerm) {
             subscribe<SearchOpenedEvent> {
                 Platform.runLater { requestFocus() }
             }
             setOnKeyReleased { controller.search() }
             managedProperty().bind(visibleProperty())
-            visibleWhen(controller.searchIsVisible)
+            visibleWhen(controller.isSearchVisible)
         }
 
         setOnKeyPressed {

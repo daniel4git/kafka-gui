@@ -13,7 +13,7 @@ class SettingsPane : View("Settings") {
                 paddingBottom = -5.0
             }
             hbox {
-                textfield(settings.kafkahost) {
+                textfield(settings.kafkaHost) {
                     prefWidth = 300.0
                 }
                 paddingBottom = 10.0

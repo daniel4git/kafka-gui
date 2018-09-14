@@ -2,35 +2,30 @@ package ui.controllers
 
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.ObservableList
-import routes.TopicListener
+import routes.KafkaConsumer
 import tornadofx.*
 
 class ConsumerController : Controller() {
-
     val topic = SimpleStringProperty()
+    val consumers = mutableListOf<KafkaConsumer>().observable()
 
-    val topicList = mutableListOf<TopicListener>().observable()
+    private val settings: SettingsController by inject()
+    private val routes: RouteController by inject()
 
-    private val settings : SettingsController by inject()
-    private val routes : RouteController by inject()
+    fun addConsumer() {
+        if (topic.isEmpty.value) return
+        if (settings.kafkaHost.isEmpty.value) return
 
-    fun addTopic() {
-
-        if( settings.kafkahost.value == null ) return
-
-        if (topic.isNotEmpty.value) {
-            val topicListener = TopicListener(
-                topic.value,
-                settings.kafkahost.value
-            )
-            topicList.add( topicListener )
-            topic.value = ""
-            routes.addRoute(topicListener)
-        }
+        val consumer = KafkaConsumer(
+            topic.value,
+            settings.kafkaHost.value
+        )
+        consumers.add(consumer)
+        routes.addRoute(consumer)
     }
 
-    fun deleteTopic(itemsToDelete : ObservableList<TopicListener>) {
+    fun deleteConsumers(itemsToDelete: ObservableList<KafkaConsumer>) {
         itemsToDelete.forEach { routes.removeRoute(it.id) }
-        topicList.removeAll( itemsToDelete )
+        consumers.removeAll(itemsToDelete)
     }
 }

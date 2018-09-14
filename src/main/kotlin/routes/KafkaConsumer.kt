@@ -3,9 +3,9 @@ package routes
 import org.apache.camel.builder.RouteBuilder
 import java.util.*
 
-class TopicListener(
+class KafkaConsumer(
     val topic: String,
-    private val kafkahost: String
+    private val kafkaHost: String
 ) : RouteBuilder() {
 
     val id: String = UUID.randomUUID().toString()
@@ -13,7 +13,7 @@ class TopicListener(
     val isPattern = Regex("[^a-zA-Z0-9._\\-]+").containsMatchIn(topic)
 
     override fun configure() {
-        from("kafka:$topic?brokers=$kafkahost&topicIsPattern=$isPattern")
+        from("kafka:$topic?brokers=$kafkaHost&topicIsPattern=$isPattern")
             .routeId(id)
             .wireTap("seda:tap")
             .to("seda:kafka")

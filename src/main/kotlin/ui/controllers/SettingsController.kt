@@ -6,7 +6,7 @@ import tornadofx.*
 
 class SettingsController : Controller() {
 
-    val kafkahost = SimpleStringProperty("localhost:9092")
+    val kafkaHost = SimpleStringProperty("localhost:9092")
     val recordMessages = SimpleBooleanProperty()
     val generateFakeData = SimpleBooleanProperty()
     val formatJson = SimpleBooleanProperty()

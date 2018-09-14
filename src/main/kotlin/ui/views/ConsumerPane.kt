@@ -6,7 +6,7 @@ import javafx.scene.Cursor
 import javafx.scene.input.KeyCode
 import javafx.scene.layout.Priority
 import javafx.scene.paint.Color
-import routes.TopicListener
+import routes.KafkaConsumer
 import tornadofx.*
 import ui.controllers.ConsumerController
 
@@ -14,7 +14,7 @@ class ConsumerPane : View("Consumers") {
 
     private val controller: ConsumerController by inject()
 
-    private val topicListeners = mutableListOf<TopicListener>().observable()
+    private val selectedConsumers = mutableListOf<KafkaConsumer>().observable()
 
     override val root = vbox {
         // This is here so that the prompt text is visible
@@ -32,14 +32,14 @@ class ConsumerPane : View("Consumers") {
                 promptText = ".*search.*"
                 setOnKeyPressed {
                     if (it.code == KeyCode.ENTER)
-                        controller.addTopic()
+                        controller.addConsumer()
                 }
                 hgrow = Priority.ALWAYS
             }
 
             button("Add") {
                 action {
-                    controller.addTopic()
+                    controller.addConsumer()
                 }
 
                 cursor = Cursor.HAND
@@ -47,18 +47,18 @@ class ConsumerPane : View("Consumers") {
             }
         }
 
-        listview(controller.topicList) {
+        listview(controller.consumers) {
             cellFormat {
                 text = it.topic
             }
             multiSelect(true)
-            topicListeners.bind(selectionModel.selectedItems) { it }
+            selectedConsumers.bind(selectionModel.selectedItems) { it }
             vgrow = Priority.ALWAYS
         }
 
         hbox {
             button("Delete") {
-                action { controller.deleteTopic(topicListeners) }
+                action { controller.deleteConsumers(selectedConsumers) }
                 cursor = Cursor.HAND
                 style {
                     baseColor = c("#bf2626")

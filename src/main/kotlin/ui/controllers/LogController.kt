@@ -15,34 +15,30 @@ import ui.models.SearchOpenedEvent
 
 class LogController : Controller() {
 
-    val searchField = SimpleStringProperty()
-    val searchIsVisible = SimpleBooleanProperty()
-
+    val searchTerm = SimpleStringProperty()
+    val isSearchVisible = SimpleBooleanProperty()
     val messageList = mutableListOf<HighlightMessage>().observable()
 
     init {
         subscribe<MessageAddedEvent> {
-            Platform.runLater {
-                messageList.add( it.message )
-            }
+            Platform.runLater { messageList.add( it.message ) }
         }
     }
 
     fun handleKeyPress(keyEvent: KeyEvent) {
-        println("key event: $keyEvent")
         val findMac = KeyCodeCombination(KeyCode.F, KeyCombination.META_DOWN)
         if (findMac.match(keyEvent)) {
-            searchIsVisible.value = true
+            isSearchVisible.value = true
             fire(SearchOpenedEvent())
         } else if (keyEvent.code == KeyCode.ESCAPE) {
-            searchIsVisible.value = false
+            isSearchVisible.value = false
         }
     }
 
     fun search() {
         messageList.forEach {
-            if (searchIsVisible.value) {
-                it.searchTerm = searchField.valueSafe
+            if (isSearchVisible.value) {
+                it.searchTerm = searchTerm.valueSafe
             } else {
                 it.searchTerm = ""
             }
