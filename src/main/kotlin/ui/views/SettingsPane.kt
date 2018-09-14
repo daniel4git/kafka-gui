@@ -1,11 +1,13 @@
 package ui.views
 
 import tornadofx.*
+import ui.controllers.RouteController
 import ui.controllers.SettingsController
 
 class SettingsPane : View("Settings") {
 
     private val settings: SettingsController by inject()
+    private val routes: RouteController by inject()
 
     override val root = vbox {
         vbox {
@@ -18,22 +20,19 @@ class SettingsPane : View("Settings") {
                 }
                 paddingBottom = 10.0
             }
-            checkbox("Record messages", settings.recordMessages) {
+            checkbox("Record messages") {
                 action {
-                    settings.toggleCollectData()
+                    routes.toggle("tap", isSelected)
                 }
             }
-            checkbox("Generate fake data", settings.generateFakeData) {
+            checkbox("Generate fake data") {
                 action {
-                    settings.toggleFakeData()
+                    routes.toggle("fake", isSelected)
                 }
             }
-            checkbox("Format JSON", settings.formatJson) {
-                isSelected = true
-            }
+            checkbox("Format JSON", settings.formatJson)
             spacing = 10.0
         }
-
         paddingAll = 10.0
     }
 }

@@ -21,11 +21,11 @@ class ConsumerController : Controller() {
             settings.kafkaHost.value
         )
         consumers.add(consumer)
-        routes.addRoute(consumer)
+        routes.add(consumer)
     }
 
     fun deleteConsumers(itemsToDelete: ObservableList<KafkaConsumer>) {
-        itemsToDelete.forEach { routes.removeRoute(it.id) }
+        itemsToDelete.forEach { routes.remove(it.id) }
         consumers.removeAll(itemsToDelete)
     }
 }

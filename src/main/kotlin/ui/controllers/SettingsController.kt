@@ -5,20 +5,6 @@ import javafx.beans.property.SimpleStringProperty
 import tornadofx.*
 
 class SettingsController : Controller() {
-
     val kafkaHost = SimpleStringProperty("localhost:9092")
-    val recordMessages = SimpleBooleanProperty()
-    val generateFakeData = SimpleBooleanProperty()
-    val formatJson = SimpleBooleanProperty()
-
-    private val routes : RouteController by inject()
-
-    fun toggleFakeData() {
-        routes.toggleRoute("fake")
-    }
-
-    fun toggleCollectData() {
-        routes.toggleRoute("tap")
-    }
-
+    val formatJson = SimpleBooleanProperty(true)
 }

@@ -18,10 +18,9 @@ class MainView : View("Kafka") {
     private val routes: RouteController by inject()
 
     override fun onDock() {
-        routes.addRoute(Faker())
-        routes.addRoute(Recorder())
-        routes.addRoute(GuiEndpoint(find())) // TODO this is too magical
-        routes.start()
+        routes.add(Faker())
+        routes.add(Recorder())
+        routes.add(GuiEndpoint(find())) // TODO this is too magical
     }
 
     override val root = tabpane {

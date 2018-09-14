@@ -9,32 +9,42 @@ class RouteController : Controller() {
 
     private val camelContext = DefaultCamelContext()
 
-    fun toggleRoute(routeId: String) {
+    init {
         runAsync {
-            if (camelContext.getRouteStatus(routeId).isStarted) {
-                camelContext.stopRoute(routeId, 1, TimeUnit.SECONDS, false)
-            } else {
-                camelContext.startRoute(routeId)
-            }
+            camelContext.start()
         }
     }
 
-    fun addRoute(builder: RouteBuilder) {
+    fun add(builder: RouteBuilder) {
         runAsync {
             camelContext.addRoutes(builder)
         }
     }
 
-    fun removeRoute(routeId: String) {
+    fun remove(routeId: String) {
         runAsync {
             camelContext.stopRoute(routeId, 1, TimeUnit.SECONDS, false)
             camelContext.removeRoute(routeId)
         }
     }
 
-    fun start() {
+    fun start(routeId: String) {
         runAsync {
-            camelContext.start()
+            camelContext.startRoute(routeId)
+        }
+    }
+
+    fun stop(routeId: String) {
+        runAsync {
+            camelContext.stopRoute(routeId, 1, TimeUnit.SECONDS, false)
+        }
+    }
+
+    fun toggle(routeId: String, isEnabled: Boolean) {
+        if (isEnabled) {
+            start(routeId)
+        } else {
+            stop(routeId)
         }
     }
 }
