@@ -1,7 +1,5 @@
 package ui.controllers
 
-import ui.models.HighlightMessage
-import ui.models.MessageAddedEvent
 import javafx.application.Platform
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.property.SimpleStringProperty
@@ -10,14 +8,14 @@ import javafx.scene.input.KeyCodeCombination
 import javafx.scene.input.KeyCombination
 import javafx.scene.input.KeyEvent
 import tornadofx.*
-import ui.models.MessageChangedEvent
-import ui.models.SearchOpenedEvent
+import ui.models.KafkaMessage
+import ui.models.MessageAddedEvent
 
 class LogController : Controller() {
 
     val searchTerm = SimpleStringProperty()
     val isSearchVisible = SimpleBooleanProperty()
-    val messageList = mutableListOf<HighlightMessage>().observable()
+    val messageList = mutableListOf<KafkaMessage>().observable()
 
     init {
         subscribe<MessageAddedEvent> {
@@ -34,15 +32,8 @@ class LogController : Controller() {
             isSearchVisible.value = false
         }
     }
-
-    fun search() {
-        messageList.forEach {
-            if (isSearchVisible.value) {
-                it.searchTerm = searchTerm.valueSafe
-            } else {
-                it.searchTerm = ""
-            }
-        }
-        fire(MessageChangedEvent())
-    }
 }
+
+
+// TODO I don't know where to put this
+class SearchOpenedEvent : FXEvent(EventBus.RunOn.BackgroundThread)

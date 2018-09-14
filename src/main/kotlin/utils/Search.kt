@@ -6,8 +6,7 @@ import javafx.scene.text.TextFlow
 
 fun highlight(
     text: String,
-    searchTerm: String,
-    ignoreCase: Boolean
+    searchTerm: String
 ): TextFlow {
     
     if (searchTerm.isEmpty()) {
@@ -22,7 +21,7 @@ fun highlight(
     val richText = text
         .split(keepSearchTerm)
         .map {
-            if (it.equals(searchTerm, ignoreCase))
+            if (it.equals(searchTerm, true))
                 createHighlight(it)
             else
                 Text(it)

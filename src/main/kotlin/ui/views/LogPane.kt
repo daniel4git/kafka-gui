@@ -4,24 +4,17 @@ import javafx.application.Platform
 import javafx.scene.layout.Priority
 import tornadofx.*
 import ui.controllers.LogController
-import ui.models.MessageChangedEvent
-import ui.models.SearchOpenedEvent
-import utils.highlight
+import ui.controllers.SearchOpenedEvent
 
 class LogPane : View("Log") {
 
     private val controller: LogController by inject()
+    private val filteredMessages = SortedFilteredList(controller.messageList)
 
     override val root = vbox {
-        listview(controller.messageList) {
-            subscribe<MessageChangedEvent> {
-                refresh()
-            }
+        listview(filteredMessages) {
             cellFormat {
-                style {
-                    fontFamily = "Menlo"
-                }
-                graphic = highlight(item.message, item.searchTerm, true)
+                graphic = MessageCell(it).root
             }
             vgrow = Priority.ALWAYS
         }
@@ -30,7 +23,10 @@ class LogPane : View("Log") {
             subscribe<SearchOpenedEvent> {
                 Platform.runLater { requestFocus() }
             }
-            setOnKeyReleased { controller.search() }
+            filteredMessages.filterWhen(textProperty()) { query, item ->
+                item.message.contains(query, true) ||
+                item.topic.contains(query, true)
+            }
             managedProperty().bind(visibleProperty())
             visibleWhen(controller.isSearchVisible)
         }
