@@ -20,6 +20,7 @@ class ConsumerController : Controller() {
             topic.value,
             settings.kafkaHost.value
         )
+        topic.value = ""
         consumers.add(consumer)
         routes.add(consumer)
     }
