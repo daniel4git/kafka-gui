@@ -3,9 +3,9 @@ package ui.views
 import javafx.application.Platform
 import javafx.scene.layout.Priority
 import tornadofx.*
-import ui.controllers.FormatChangedEvent
 import ui.controllers.LogController
-import ui.controllers.SearchOpenedEvent
+import ui.events.FormatChangedEvent
+import ui.events.SearchOpenedEvent
 
 class LogPane : View("Log") {
 

@@ -2,9 +2,9 @@ package ui.models
 
 import org.apache.camel.Header
 import tornadofx.*
+import ui.events.MessageAddedEvent
 
 data class KafkaMessage(val topic: String, val message: String)
-class MessageAddedEvent(val message: KafkaMessage) : FXEvent(EventBus.RunOn.BackgroundThread)
 
 class MessageModel : Component() {
     @Suppress("unused")

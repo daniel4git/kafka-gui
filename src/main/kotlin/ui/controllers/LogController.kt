@@ -8,8 +8,9 @@ import javafx.scene.input.KeyCodeCombination
 import javafx.scene.input.KeyCombination
 import javafx.scene.input.KeyEvent
 import tornadofx.*
+import ui.events.MessageAddedEvent
+import ui.events.SearchOpenedEvent
 import ui.models.KafkaMessage
-import ui.models.MessageAddedEvent
 
 class LogController : Controller() {
 
@@ -33,8 +34,3 @@ class LogController : Controller() {
         }
     }
 }
-
-
-// TODO I don't know where to put this
-class SearchOpenedEvent : FXEvent(EventBus.RunOn.BackgroundThread)
-class FormatChangedEvent : FXEvent(EventBus.RunOn.BackgroundThread)

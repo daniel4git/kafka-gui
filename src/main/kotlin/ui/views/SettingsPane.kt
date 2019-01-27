@@ -1,9 +1,9 @@
 package ui.views
 
 import tornadofx.*
-import ui.controllers.FormatChangedEvent
 import ui.controllers.RouteController
 import ui.controllers.SettingsController
+import ui.events.FormatChangedEvent
 
 class SettingsPane : View("Settings") {
 
